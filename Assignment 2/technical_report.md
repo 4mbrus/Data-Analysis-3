@@ -1,8 +1,9 @@
-# Technical Report: Startup Investment Classification & Risk Analysis
+# Technical Report: Investment Classification & Risk Analysis
 
 **Prepared by:** Ambrus Fodor, Katharina Burtscher\
 **Date:** February 10, 2026\
-**Subject:** Evaluation of Predictive Models for Capital Allocation Optimization
+**Subject:** Evaluation of Predictive Models for Capital Allocation Optimization\
+**GitHub:**  https://github.com/4mbrus/Data-Analysis-3/tree/main/Assignment%202
 
 ---
 
@@ -50,18 +51,20 @@ A critical component of our architecture was the use of `Pipelines` to prevent d
 **Code Snippet: Pipeline Implementation**
 ```python
 from sklearn.pipeline import Pipeline
-from sklearn.preprocessing import StandardScaler
-from sklearn.impute import SimpleImputer
-from sklearn.ensemble import RandomForestClassifier
 
-# Pipeline ensures scaler is fit only on training data during CV
-model_pipeline = Pipeline([
-    ('imputer', SimpleImputer(strategy='median')),
-    ('scaler', StandardScaler()), 
-    ('classifier', RandomForestClassifier(random_state=42))
+# We use a Pipeline to scale data INSIDE the CV loop (prevents leakage)
+lasso_rmse_pipe = Pipeline([
+    ('scaler', StandardScaler()),
+    ('lasso', LogisticRegressionCV(
+        Cs=Cs_values,
+        penalty='l1',
+        cv=k,                        
+        scoring='neg_brier_score',  
+        solver='liblinear',
+        random_state=42,
+        n_jobs=-1               
+    ))
 ])
-
-# When calling fit(X_train, y_train), the scaler learns mean/std from X_train only.
 ```
 
 ### 3.2 Hyperparameter Tuning
@@ -71,19 +74,27 @@ Code Snippet: Grid Search Configuration
 ```python
 from sklearn.model_selection import GridSearchCV
 
-# Random Forest Hyperparameters
-grid_params = {
-    'classifier__max_features': [5, 6, 7, "sqrt"],
-    'classifier__min_samples_split': [11, 16],
-    'classifier__n_estimators': [500]
+# Define RF Grid & Model
+grid = {
+    'max_features': [5, 6, 7, "sqrt"],
+    'criterion': ['gini'],
+    'min_samples_split': [11, 16],
+    'n_estimators': [500]
 }
 
-# Optimization for Probability Calibration (Brier Score)
-grid_search = GridSearchCV(
-    estimator=model_pipeline,
-    param_grid=grid_params,
-    cv=5,
-    scoring='neg_brier_score', # Minimizing RMSE
+prob_forest = RandomForestClassifier(
+    random_state=42, 
+    n_estimators=100,
+    oob_score=True
+)
+
+# Run Grid Search
+prob_forest_grid = GridSearchCV(
+    prob_forest, 
+    grid, 
+    cv=5, 
+    refit='neg_brier_score',  
+    scoring=['accuracy', 'roc_auc', 'neg_brier_score'], 
     n_jobs=-1
 )
 ```
@@ -110,6 +121,8 @@ def calculate_business_cost(y_true, y_probs, threshold):
 
 ### 4. Model Comparison & Selection
 We evaluated four candidate models using 5-fold cross-validation and tested the top performers on the holdout set. While Gradient Boosting achieved a slightly higher raw AUC, the Random Forest model resulted in the lowest expected financial loss when applied to our specific cost matrix.
+
+![ROC Curve comparison of models](plots/ROC_curves.png)
 
 **Table 1: Model Performance Summary (Holdout Set)**
 |Model|AUC|Classification Threshold|False Positives (Bad Inv) | False Negatives (Missed Opp) | Total Expected Loss|
@@ -180,3 +193,12 @@ The Random Forest model is a "Capital Shield." It is designed to be highly speci
 - Due Diligence: The remaining ~20% of applicants (predicted "Yes") have a Precision of 76.6%. Investment analysts should focus their deep-dive efforts here, as 3 out of 4 of these companies are likely winners.
 
 - Sector Adjustment: Be cautious when applying this model to Manufacturing firms; consider lowering the threshold to 0.50 for that sector to catch more opportunities.
+
+### 7. Technical details
+- Python version used: 3.12.4
+- Packages used:
+    - numpy
+    - pandas
+    - matplotlib
+    - sklearn
+    - patsy
