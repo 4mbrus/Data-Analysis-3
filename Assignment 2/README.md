@@ -1,3 +1,44 @@
+README: Assignment 2
+====================
+
+This repository contains the the entire data and workflow for the second assignment of Data Analysis 3.
+------------
+Hard Facts:
+- Authors: Ambrus Fodor & Katharina Burtscher
+- Date: 15.02.2026
+- CEU - Data Analysis 3
+
+Project Structure
+-----------------
+
+```
+.
+├── README.md
+├── requirements.txt
+├── data
+│   ├── bisnode_firms_clean.csv
+│   ├── cs_bisnode_panel.csv      <- Data from third party sources.
+│   └── variable_table.md       <- Intermediate data that has been transformed.
+├── notebooks-&-python-files
+│   ├── assignment_2.ipynb  
+│   ├── data_prep.ipynb  
+│   ├── make_it_smaller.py       <- Data from third party sources.
+│   └── py_helper_functions.py  
+└── plots
+    ├── technical_report.md  
+    ├── technical_report.pdf
+    └── project_report.pdf
+```
+
+Check out my latest research project, which successfully applied the `cookiecutter` philosophy: [SEMIC: an efficient surface energy and mass balance model applied to the Greenland ice sheet](https://gitlab.pik-potsdam.de/krapp/semic-project).
+
+License
+-------
+This project is licensed under the terms of the [BSD License](/LICENSE)
+
+
+
+
 # DA3 Assignment 2
 **Finding fast growing firms 2025**
 
