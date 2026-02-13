@@ -1,7 +1,7 @@
 README: Assignment 2
 ====================
 
-This repository contains the the entireworkflow for the second assignment of Data Analysis 3. The folder "reports" contains the required technical and project report. For more information on the decisions and steps behind the two reports, please consider the "assignment_2.ipynb" notebook.
+This repository contains the the entire workflow for the second assignment of Data Analysis 3. The folder "reports" contains the required technical and project report. For more information on the decisions and steps behind the two reports, please consider the "assignment_2.ipynb" notebook.
 
 Hard Facts:
 ------------
