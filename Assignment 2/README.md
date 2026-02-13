@@ -1,9 +1,10 @@
 README: Assignment 2
 ====================
 
-This repository contains the the entire data and workflow for the second assignment of Data Analysis 3.
-------------
+This repository contains the the entireworkflow for the second assignment of Data Analysis 3. The folder "reports" contains the required technical and project report. For more information on the decisions and steps behind the two reports, please consider the "assignment_2.ipynb" notebook.
+
 Hard Facts:
+------------
 - Authors: Ambrus Fodor & Katharina Burtscher
 - Date: 15.02.2026
 - CEU - Data Analysis 3
@@ -16,85 +17,16 @@ Project Structure
 ├── README.md
 ├── requirements.txt
 ├── data
-│   ├── bisnode_firms_clean.csv
+│   ├── bisnode_firms_clean.csv   <- Transformed and cleaned data; used used for model building in "assignment_2.ipynb".
 │   ├── cs_bisnode_panel.csv      <- Data from third party sources.
-│   └── variable_table.md       <- Intermediate data that has been transformed.
+│   └── variable_table.md         <- comprehensive lsit of variables
 ├── notebooks-&-python-files
-│   ├── assignment_2.ipynb  
-│   ├── data_prep.ipynb  
-│   ├── make_it_smaller.py       <- Data from third party sources.
-│   └── py_helper_functions.py  
+│   ├── assignment_2.ipynb        <- Model building, evaluation and selection.
+│   ├── data_prep.ipynb           <- Data cleaning and preparation; based on class notebook
+│   ├── make_it_smaller.py        <- Helper function to upload "cs_bisnode_panel.csv" to GitHub
+│   └── py_helper_functions.py    <- Helper functions; based on class notebook
 └── plots
-    ├── technical_report.md  
-    ├── technical_report.pdf
-    └── project_report.pdf
+    ├── technical_report.md       <- Technical Report as markdown
+    ├── technical_report.pdf      <- Technical Report as PDF
+    └── project_report.pdf        <- Project Report as PDF
 ```
-
-Check out my latest research project, which successfully applied the `cookiecutter` philosophy: [SEMIC: an efficient surface energy and mass balance model applied to the Greenland ice sheet](https://gitlab.pik-potsdam.de/krapp/semic-project).
-
-License
--------
-This project is licensed under the terms of the [BSD License](/LICENSE)
-
-
-
-
-# DA3 Assignment 2
-**Finding fast growing firms 2025**
-
-## The assignment
-Your task is to build a model to predict fast growth of firms using the bisnode-firms data we used in class.
-
-- You should design the target (fast growth), it can be measured in any way you like over one (2013 vs 2012) or two years (2014 vs 2012).
-- You need to argue for your choice, discussing a few alternatives, maybe 2-3 paragraphs using concepts and ideas from corporate finance.
-- Build three different models and pick the one you like the most.
-- Should include at least one logit and one random forest.
-
-## Data management, sample design
-- The dataset is very close to what you saw in seminar.
-- But you need to start with the panel for 2010-2015.
-- Two pieces of code, sample design and prediction:
-    - ch17-firm-exit-data-prep.
-        - Starts from cs_bisnode_panel.csv
-        - Yields bisnode_firms_clean.csv
-    - ch17-predicting-firm-exit.
-    - On the sample, you can make changes, but do not need to.
-## Features
-- You may use similar variables and features we used for exit prediction.
-- You may do differently.
-- Look at descriptives, lowess, tabulate factors, make decisions.
-
-## Tasks 1
-
-### PART I: Probability prediction
-- Predict probabilities.
-- Look at cross-validated performance and pick your favorite model.
-
-### PART II: Classification
-- Think about the business problem, and define your loss function (like FP=X dollars, FN=Y dollars).
-- For each model:
-    - Predict probabilities.
-    - Look for the optimal classification threshold.
-    - Calculate expected loss with your loss function.
-    - Pick the model that has the smallest average (over 5 folds) expected loss.
-
-### PART III: Discussion of results
-- Show a confusion table (on a selected fold or holdout set).
-- Discuss results, evaluate how useful your model may be.
-
-## Tasks 2
-- There are two industry categories in the dataset: manufacturing and services (repair, accommodation, food).
-- Define a single loss function, but carry out the exercise for two groups separately.
-- Pick a prediction model, carry out classification for manufacturing and then repeat for services.
-- Compare the model performance across two samples.
-## Submit two documents to moodle
-1. A summary report (pdf), max 5 pages including tables and graphs discussing your work.
-    - It is targeted to data science team leaders and senior managers.
-    - Can use technical language but explain briefly.
-    - But need to be the point!
-    - Focus on key decision points, results, interpretation, decision.
-2. Technical report – in pdf with more technical discussion.
-    - May include code snippets (not verbose, avoid iterations, etc.).
-    - May include additional tables and graphs.
-    - Detail all decisions you made.
-    - Reports should link to code in GitHub.
