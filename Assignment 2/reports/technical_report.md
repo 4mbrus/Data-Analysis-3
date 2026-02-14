@@ -78,6 +78,7 @@ Our primary "Fast Growth" label was constructed using a 30% growth cutoff, deter
 We evaluated several metrics for growth and ultimately selected *Sales*. It provides a transparent, universal measure of traction; even venture-backed startups often prioritize sales growth before reaching profitability.
 * **Functional Form:** We calculated the percentage growth in sales between 2012 and 2013. These years were chosen due to their high data density and availability.
 * **Cut-off Selection:** While some definitions use 20% over three years, we applied a stricter 30% threshold for a single-year snapshot to capture truly high-velocity firms.
+![[sales_growth_frequency.png]]
 
 ### 3.3 Feature Engineering
 
@@ -215,13 +216,13 @@ We benchmarked four candidate models using 5-fold cross-validation. While Gradie
 
 | Model | AUC | Classification Threshold | False Positives (Bad Inv) | False Negatives (Missed Opp) | Total Expected Loss |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| Logit X4 | 0.758 | 0.65 | 42 | 501 | $175,500,000 |
-| Lasso Logit | 0.761 | 0.62 | 48 | 493 | $176,700,000 |
-| Gradient Boosting | 0.781 | 0.68 | 45 | 491 | $174,300,000 |
-| **Random Forest (Selected)** | **0.775** | **0.60** | **41** | **493** | **$172,500,000** |
+| Logit X4 | 0.758 | 0.65 | 42 | 501 | $64,665 |
+| Lasso Logit | 0.761 | 0.62 | 48 | 493 | $65,107 |
+| Gradient Boosting | 0.781 | 0.68 | 45 | 491 | $64,223 |
+| **Random Forest (Selected)** | **0.775** | **0.60** | **41** | **493** | **$63,559** |
 
-**Selection Logic:** Although Gradient Boosting showed a marginal edge in AUC, the Random Forest model's probability distribution allowed for a more efficient threshold (0.60). By minimizing expensive False Positives (41 vs 45), it provides a **$1.8 Million cost saving** over the next best alternative.
-
+**Selection Logic:** Although Gradient Boosting showed a marginal edge in AUC, the Random Forest model's probability distribution allowed for a more efficient threshold (0.60). By minimizing expensive False Positives (41 vs 45), it provides a **$700 cost saving** over the next best alternative.
+![[ROC_curves.png]]
 ---
 
 ## 6. Final Model Evaluation: Random Forest
