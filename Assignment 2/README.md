@@ -19,7 +19,7 @@ Project Structure
 ├── data
 │   ├── bisnode_firms_clean.csv   <- Transformed and cleaned data; used used for model building in "assignment_2.ipynb".
 │   ├── cs_bisnode_panel.csv      <- Data from third party sources.
-│   └── variable_table.md         <- comprehensive lsit of variables
+│   └── variable_table.md         <- comprehensive list of variables
 ├── notebooks-&-python-files
 │   ├── assignment_2.ipynb        <- Model building, evaluation and selection.
 │   ├── data_prep.ipynb           <- Data cleaning and preparation; based on class notebook
